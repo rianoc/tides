@@ -16,14 +16,14 @@ cp config.py.example config.py
 ```
 
 Edit `config.py` to replace `URL` which you can find on [tidetimes.org.uk](https://www.tidetimes.org.uk)
-You can also change `LOCATION` and not use `/share` as I have.
+You can also change `LOCATION` and not use `/share`.
 
 ```bash
 crontab -e
 ```
 
 ```bash
-0 6 * * * /usr/bin/python3 /share/tides/getTides.py
+0 6 * * * python3 /share/tides/getTides.py
 ```
 
 Add sensors to `configuration.yaml`
@@ -32,49 +32,49 @@ Add sensors to `configuration.yaml`
 sensor 9:
   platform: command_line
   name: High Tide 1 Time
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'H1T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'H1T' | sed 's/^.*,//'"
   
 sensor 10:
   platform: command_line
   name: High Tide 1 Height
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'H1H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'H1H' | sed 's/^.*,//'"
   unit_of_measurement: "m"
 
 sensor 11:
   platform: command_line
   name: Low Tide 1 Time
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'L1T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'L1T' | sed 's/^.*,//'"
 
 sensor 12:
   platform: command_line
   name: Low Tide 1 Height
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'L1H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'L1H' | sed 's/^.*,//'"
   unit_of_measurement: "m"
   
 sensor 13:
   platform: command_line
   name: High Tide 2 Time
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'H2T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'H2T' | sed 's/^.*,//'"
   
 sensor 14:
   platform: command_line
   name: High Tide 2 Height
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'H2H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'H2H' | sed 's/^.*,//'"
   unit_of_measurement: "m"
 
 sensor 15:
   platform: command_line
   name: Low Tide 2 Time
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'L2T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'L2T' | sed 's/^.*,//'"
 
 sensor 16:
   platform: command_line
   name: Low Tide 2 Height
-  command: "/usr/bin/python3 /share/tides/tides.py | grep 'L2H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'L2H' | sed 's/^.*,//'"
   unit_of_measurement: "m"
 ```
 
-To customise icons I also added:
+To customise icons:
 
 ```yaml
 homeassistant:
@@ -100,4 +100,26 @@ sensor.low_tide_2_height:
   icon: mdi:elevation-decline
 sensor.low_tide_2_time:
   icon: mdi:flag-outline
+```
+
+For display on the UI as:
+
+![Tides](tides.PNG "Tides")
+
+```yaml
+      - type: glance
+        entities:
+          - entity: sensor.high_tide_1_time
+          - entity: sensor.high_tide_1_height
+          - entity: sensor.low_tide_1_time
+          - entity: sensor.low_tide_1_height
+          - entity: sensor.high_tide_2_time
+          - entity: sensor.high_tide_2_height
+          - entity: sensor.low_tide_2_time
+          - entity: sensor.low_tide_2_height
+        show_state: true
+        show_icon: true
+        show_name: false
+        columns: 4
+        title: Tides
 ```
