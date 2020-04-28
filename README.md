@@ -6,6 +6,9 @@ Dependencies needed:
 
 ```bash
 pip install bs4
+
+#Alpine Linux
+#apk add py3-beautifulsoup4
 ```
 
 ```bash
