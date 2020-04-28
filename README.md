@@ -32,48 +32,49 @@ crontab -e
 Add sensors to `configuration.yaml`
 
 ```yaml
+
 sensor 9:
   platform: command_line
   name: High Tide 1 Time
-  command: "python3 /share/tides/tides.py | grep 'H1T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f2 | sed -n '1p'"
   
 sensor 10:
   platform: command_line
   name: High Tide 1 Height
-  command: "python3 /share/tides/tides.py | grep 'H1H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f3 | sed 's/.$//' | sed -n '1p'"
   unit_of_measurement: "m"
 
 sensor 11:
   platform: command_line
   name: Low Tide 1 Time
-  command: "python3 /share/tides/tides.py | grep 'L1T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'Low' | cut -d ',' -f2 | sed -n '1p'"
 
 sensor 12:
   platform: command_line
   name: Low Tide 1 Height
-  command: "python3 /share/tides/tides.py | grep 'L1H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'Low' | cut -d ',' -f3 | sed 's/.$//' | sed -n '1p'"
   unit_of_measurement: "m"
   
 sensor 13:
   platform: command_line
   name: High Tide 2 Time
-  command: "python3 /share/tides/tides.py | grep 'H2T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f2 | sed -n '2p'"
   
 sensor 14:
   platform: command_line
   name: High Tide 2 Height
-  command: "python3 /share/tides/tides.py | grep 'H2H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f3 | sed 's/.$//' | sed -n '2p'"
   unit_of_measurement: "m"
 
 sensor 15:
   platform: command_line
   name: Low Tide 2 Time
-  command: "python3 /share/tides/tides.py | grep 'L2T' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f2 | sed -n '2p'"
 
 sensor 16:
   platform: command_line
   name: Low Tide 2 Height
-  command: "python3 /share/tides/tides.py | grep 'L2H' | sed 's/^.*,//'"
+  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f3 | sed 's/.$//' | sed -n '2p'"
   unit_of_measurement: "m"
 ```
 
