@@ -69,12 +69,12 @@ sensor 14:
 sensor 15:
   platform: command_line
   name: Low Tide 2 Time
-  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f2 | sed -n '2p'"
+  command: "python3 /share/tides/tides.py | grep 'Low' | cut -d ',' -f2 | sed -n '2p'"
 
 sensor 16:
   platform: command_line
   name: Low Tide 2 Height
-  command: "python3 /share/tides/tides.py | grep 'High' | cut -d ',' -f3 | sed 's/.$//' | sed -n '2p'"
+  command: "python3 /share/tides/tides.py | grep 'Low' | cut -d ',' -f3 | sed 's/.$//' | sed -n '2p'"
   unit_of_measurement: "m"
 ```
 
