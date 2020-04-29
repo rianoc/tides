@@ -5,10 +5,7 @@
 Dependencies needed:
 
 ```bash
-pip install bs4
-
-#Alpine Linux
-#apk add py3-beautifulsoup4
+pip install requests bs4
 ```
 
 ```bash
@@ -127,3 +124,25 @@ For display on the UI as:
         columns: 4
         title: Tides
 ```
+
+### Hass.io specifics
+
+The Hass.io VM on Alpine Linux does not retain changes made so some steps above need to be done differently
+
+Download any needed scripts to a specific folder:
+
+```bash
+pip3 install --install-option="--prefix=/share/tides" bs4
+```
+
+`crontab` will also not work. Instead create a new `command_line` sensor:
+
+```yaml
+  sensor 17:
+  platform: command_line
+  name: Update tides
+  command: "PYTHONPATH='/share/tides/lib/python3.8/site-packages' python3 /share/tides/getTides.py"
+  scan_interval: 21600
+```
+
+Notice the use of `PYTHONPATH` and the long 6hr `scan_interval`
