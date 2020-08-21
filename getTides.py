@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 from config import URL
 from config import LOCATION
 
-xml = requests.get(URL).text
-data = BeautifulSoup(xml, 'xml')
+html = requests.get(URL).text
+data = BeautifulSoup(html, 'html.parser')
 
 description = (data.findAll("description"))[1].getText()
 tides = BeautifulSoup(description, 'html.parser')
