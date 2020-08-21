@@ -15,7 +15,8 @@ cd tides
 cp config.py.example config.py
 ```
 
-Edit `config.py` to replace `URL` which you can find on [tidetimes.org.uk](https://www.tidetimes.org.uk)
+Edit `config.py` to replace `URL` which you can find on [tidetimes.org.uk](https://www.tidetimes.org.uk). Ensure to add `.rss` to the end of the URL.
+
 You can also change `LOCATION` and not use `/share`.
 
 ```bash

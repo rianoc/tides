@@ -3,24 +3,22 @@ from bs4 import BeautifulSoup
 from config import URL
 from config import LOCATION
 
-html = requests.get(URL).text
-data = BeautifulSoup(html, 'html.parser')
+xml = requests.get(URL).text
+data = BeautifulSoup(xml, 'xml')
 
-tab = (data.findAll("table", {"class": "vis3"}))[0]
+description = (data.findAll("description"))[1].getText()
+tides = BeautifulSoup(description, 'html.parser')
+tides = (str(tides).split('<br/>'))[2:-1]
 
 output_rows = []
-for table_row in tab.findAll('tr'):
-    columns = table_row.findAll('td')
-    output_row = []
-    for column in columns:
-        output_row.append(column.text)
-    output_rows.append(output_row)
+for table_row in tides:
+    s = table_row.split(' - ')
+    s1 = s[1].split(' (')
+    output_rows.append([s1[0],s[0],s1[1][:-1]])
 
-del output_rows[0:2]
 out = []
 for i in range(len(output_rows)):
     out.append(",".join(output_rows[i]))
 with open(LOCATION+'/tides.csv', "w") as output:
     for l in out:
         output.write(str(l+'\n'))
-
