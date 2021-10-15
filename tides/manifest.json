@@ -1,0 +1,8 @@
+{
+  "domain": "tides",
+  "name": "Tides",
+  "version" : "0.0.1",
+  "documentation": "https://github.com/rianoc/tides",
+  "codeowners": [],
+  "iot_class": "cloud_polling"
+}
