@@ -1,5 +1,6 @@
 """Support for the tide times RSS feeds"""
 from datetime import timedelta
+from datetime import datetime
 import logging
 import time
 
@@ -70,6 +71,9 @@ class TidesSensor(SensorEntity):
             if 4 == len(self.data):
                 attr["low_tide_2_time"] = self.data[3][1]
                 attr["low_tide_2_height"] = self.data[3][2]
+            else:
+                attr["low_tide_2_time"] = ""
+                attr["low_tide_2_height"] = ""
         elif "Low Tide"== self.data[0][0]:
             attr["low_tide_time"] = self.data[0][1]
             attr["low_tide_height"] = self.data[0][2]
@@ -80,19 +84,24 @@ class TidesSensor(SensorEntity):
             if 4 == len(self.data):
                 attr["high_tide_2_time"] = self.data[3][1]
                 attr["high_tide_2_height"] = self.data[3][2]
+            else:
+                attr["high_tide_2_time"] = ""
+                attr["high_tide_2_height"] = ""
         return attr
 
     @property
     def native_value(self):
         """Return the state of the device."""
-        if self.data:
-            if "High Tide"== self.data[0][0]:
-                tidetime = self.data[0][1]
-                return f"High tide at {tidetime}"
-            if "Low Tide" == self.data[0][0]:
-                tidetime = self.data[0][1]
-                return f"Low tide at {tidetime}"
-        return None
+        times=[datetime.strptime(x[1],'%H:%M').time()for x in self.data]
+        now=datetime.now().time()
+        nextTide=-1
+        for k, t in enumerate(times):
+            if t > now:
+                nextTide= k
+                break
+        if nextTide==-1:
+            return None
+        return self.data[nextTide][0] + " at " + self.data[nextTide][1] + " (" + self.data[nextTide][2] +"m)"
 
     def update(self):
         """Get the latest data from Tides API."""
